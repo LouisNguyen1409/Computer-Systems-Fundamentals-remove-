@@ -19,18 +19,69 @@
 
 main:
 
-  #
-  # TODO: add your code HERE
-  #
+	#
+	# TODO: add your code HERE
+	#
+	li  	$v0, 4
+	la  	$a0, prompt1
+	syscall
 
-  li   $v0, 0
-  jr   $ra          # return
+	li  	$v0, 5
+	syscall
+	move	$t1, $v0
+
+	li  	$v0, 4
+	la  	$a0, prompt2
+	syscall
+
+	li  	$v0, 5
+	syscall
+	move	$t2, $v0
+
+	sub 	$t3, $t2, $t1
+	addi	$t3, $t3, 1
+
+	add 	$t4, $t1, $t2
+
+	mul 	$t5, $t3, $t4
+	div 	$t5, $t5, 2
+
+	li  	$v0, 4
+	la  	$a0, answer1
+	syscall
+
+	li  	$v0, 1
+	move	$a0, $t1
+	syscall
+
+	li  	$v0, 4
+	la  	$a0, answer2
+	syscall
+
+	li  	$v0, 1
+	move	$a0, $t2
+	syscall
+
+	li  	$v0, 4
+	la  	$a0, answer3
+	syscall
+
+	li  	$v0, 1
+	move	$a0, $t5
+	syscall
+
+	li	$v0, 11
+	li	$a0, '\n'
+	syscall
+
+	li   	$v0, 0
+	jr  	$ra          # return
 
 
 .data
-  prompt1: .asciiz "Enter first number: "
-  prompt2: .asciiz "Enter second number: "
+	prompt1: .asciiz "Enter first number: "
+	prompt2: .asciiz "Enter second number: "
 
-  answer1: .asciiz "The sum of all numbers between "
-  answer2: .asciiz " and "
-  answer3: .asciiz " (inclusive) is: "
+	answer1: .asciiz "The sum of all numbers between "
+	answer2: .asciiz " and "
+	answer3: .asciiz " (inclusive) is: "
