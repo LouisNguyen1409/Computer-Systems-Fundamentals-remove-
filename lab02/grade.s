@@ -14,8 +14,20 @@ main:
 
 	li	$v0, 5		# scanf("%d", mark);
 	syscall
+	move	$t0, $v0
 
-	la	$a0, fl		# printf("FL\n");
+
+	la	$a0, fl
+	blt 	$t0, 50, print	# if (mark < 50) goto print;
+	la	$a0, ps
+	blt	$t0, 65, print	# if (mark < 65) goto print;
+	la	$a0, cr
+	blt	$t0, 75, print	# if (mark < 75) goto print;
+	la	$a0, dn
+	blt	$t0, 85, print	# if (mark < 85) goto print;
+	la	$a0, hd		# printf("HD\n");
+
+print:
 	li	$v0, 4
 	syscall
 

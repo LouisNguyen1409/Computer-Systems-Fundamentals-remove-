@@ -14,15 +14,21 @@ main:                 		# int main(void)
 
 	li	$v0, 5		# scanf("%d", number);
 	syscall
-
-	li	$a0, 42		# printf("%d", 42);
-	li	$v0, 1
+	li 	$t0, 1
+	move 	$t1, $v0
+condition:
+	ble	$t0, $t1, print	# while (i <= number)
+	j	end		# {
+print:
+	move	$a0, $t0
+	li	$v0, 1		# printf("%d", i);
 	syscall
 
 	li	$a0, '\n'	# printf("%c", '\n');
 	li	$v0, 11
 	syscall
-
+	add	$t0, $t0, 1	# i++
+	j	condition	# }
 end:
 	li	$v0, 0
 	jr	$ra		# return 0

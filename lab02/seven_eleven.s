@@ -15,15 +15,28 @@ main:				# int main(void) {
 
 	li	$v0, 5		# scanf("%d", number);
 	syscall
-
-	li	$a0, 42		# printf("%d", 42);
+	move   	$t0, $v0
+	li	$t1, 1
+loop:
+	blt	$t1, $t0, condition2	# if (1 < number) goto condition;
+	j	end			# else goto end;
+condition2:
+	rem	$t2, $t1, 7	# if (number % 7 == 0) goto print;
+	beq	$t2, $zero, print
+	rem	$t2, $t1, 11	# if (number % 11 == 0) goto print;
+	beq	$t2, $zero, print
+	addi	$t1, $t1, 1	# number++;
+	j	loop	# goto condition;
+print:
+	move	$a0, $t1	# printf("%d", number);
 	li	$v0, 1
 	syscall
 
 	li	$a0, '\n'	# printf("%c", '\n');
 	li	$v0, 11
 	syscall
-
+	addi	$t1, $t1, 1	# number++;
+	j	loop		# goto condition;
 end:
 	li	$v0, 0
 	jr	$ra		# return 0
